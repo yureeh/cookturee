@@ -1,0 +1,15 @@
+{% extends "index_home/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="card bg-gradient-Success 100 shadow">
+<form class="login" method="post">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <br><br>
+    <center>
+        <button class="form-control btn btn-outline-info" type="submit">Log In</button>
+    </center>
+</form>
+    Need an account?<a href="{% url 'register' %}" class="btn btn-outline-info">Sign Up</a>
+</div>
+{% endblock content %}

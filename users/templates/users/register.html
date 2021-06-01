@@ -1,0 +1,17 @@
+{% extends "index_home/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="card bg-gradient-Success 100 shadow p-3">
+    <h2>Register to Cookturee</h2>
+<form class="login" method="post">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <br><br>
+    <center>
+        <button class="form-control btn btn-outline-info" type="submit">Register</button>
+    </center>
+</form>
+    <br>
+    <small>Already have an account?</small><a href="{% url 'login' %}" class="btn btn-outline-info">Log In</a>
+</div>
+{% endblock content %}
