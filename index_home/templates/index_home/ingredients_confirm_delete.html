@@ -1,0 +1,18 @@
+{% extends "index_home/base.html" %}
+{% block content %}
+<main class="login-body slider-area slider-bg" data-vide-bg="assets/img/login-bg.mp4">
+<div id="home" class="login-form form-default">
+    <div class="">
+        <form method="post">
+            {% csrf_token %}
+            <h2 class="border-bottom mb-4">Delete ingredient</h2>
+            <h2>Are you sure you want to delete {{ object.name }}?</h2>
+            <div class="form-group">
+                <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
+                <a class="btn btn-outline-secondary" href="{% url 'admin-ingredients' %}" >Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+</main>
+{% endblock content %}

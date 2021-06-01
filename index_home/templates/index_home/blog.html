@@ -1,0 +1,71 @@
+{% extends "index_home/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col text-right mb-3">
+  <a href="{% url 'recipe-create' %}" class="btn btn-sm btn-primary">Create Recipe</a>
+</div>
+<div class="container-fluid">
+    <form class="" method="get" action="{% url 'add' %}">
+      <div class="input-group mb-3">
+        <input placeholder="Search.."aria-label="Search..." aria-describedby="button-addon2" class="form-control form-control-rounded form-control-prepended" id="txt_values" name="key" placeholder="Search..." type="text">
+        <div class="input-group-append">
+          <button class="btn btn-outline-primary" type="submit" id="button-addon2"><span class="fa fa-search"></span></button>
+        </div>
+      </div>
+    </form>
+</div>
+
+<div class="card bg-gradient-Gray 200 shadow">
+    {% for recipe in recipes %}
+        <div class="card">
+        <!--<img class="card-img-top" src="{{ recipe.photo.url }}">-->
+          <div class="card-body">
+            <a href="{% url 'recipe-detail' recipe.id %}"><h5>{{ recipe.name }}</h5></a>
+              <small class="card-text">{{ recipe.description|truncatechars:95  }}</small><br>
+              <small class="card-text"> <b>Ingredients:</b> {{recipe.ingredients}}
+              </small>
+            <h6>
+                <a href="">by {{ recipe.username }}</a>
+                | {{ recipe.date_added | date:"d M, Y" }}
+                |
+                <b style="color:red">
+                    <i class="ni ni-favourite-28"> {{ recipe.total_hearts }}</i>
+                </b>
+            </h6>
+          </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% if is_paginated %}
+<div class="container-fluid">
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+    <li class="page-item disabled">
+      <a class="page-link" href="?page={{ page.obj.previous_page_number }}" tabindex="-1">
+        <i class="fa fa-angle-left"></i>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+      {% endif %}
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+    <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+        {% elif num > page_obj.number|add:'-20' and num < page_obj.number|add:'20'%}
+    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+        {% endif %}
+      {% endfor %}
+        {% if page_obj.has_next %}
+    <li class="page-item disabled">
+      <a class="page-link" href="?page={{ page.obj.paginator.num_pages }}">
+        <i class="fa fa-angle-right"></i>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+        {% endif %}
+  </ul>
+</nav>
+</div>
+{% endif %}
+{% endblock content%}

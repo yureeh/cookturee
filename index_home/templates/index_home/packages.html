@@ -1,0 +1,70 @@
+{% extends "index_home/base.html" %}
+{% block content %}
+<div class="card bg-gradient-Gray 200 shadow">
+    <h1>Recipe Basic Info</h1>
+    <table border="1">
+        <tr style="background-color:red">
+            <td>id</td>
+            <td>name</td>
+            <td>photo</td>
+            <td>date added</td>
+            <td>description</td>
+            <td>author id</td>
+            <td>Source URL</td>
+            <td>chef tips</td>
+            <td>Cooking time</td>
+            <td>Prepared time</td>
+            <td>Service Size</td>
+            <td>Privacy</td>
+        </tr>
+        {% for i in Recipes %}
+            <tr>
+                <td>{{ i.id }}</td>
+                <td>{{ i.name }}</td>
+                <td>{{ i.photo }}</td>
+                <td>{{ i.date_added }}</td>
+                <td>{{ i.description }}</td>
+                <td>{{ i.author }}</td>
+                <td>{{ i.Source_URL }}</td>
+                <td>{{ i.chef_tips }}</td>
+                <td>{{ i.cooking_time }}</td>
+                <td>{{ i.preparation_time }}</td>
+                <td>{{ i.service_size }}</td>
+                <td>{{ i.privacy }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="card bg-gradient-Gray 200 shadow">
+    <h1>Users</h1>
+    <table border="1">
+        <tr style="background-color:red">
+            <td>id</td>
+            <td>username</td>
+            <td>password</td>
+            <td>is_superuser</td>
+            <td>email</td>
+            <td>is_staff</td>
+            <td>is_active</td>
+            <td>date_joined</td>
+            <td>first_name</td>
+            <td>last_name</td>
+        </tr>
+        {% for i in Users %}
+            <tr>
+                <td>{{ i.id }}</td>
+                <td>{{ i.username }}</td>
+                <td>{{ i.password }}</td>
+                <td>{{ i.is_superuser }}</td>
+                <td>{{ i.email }}</td>
+                <td>{{ i.is_staff }}</td>
+                <td>{{ i.is_active }}</td>
+                <td>{{ i.date_joined }}</td>
+                <td>{{ i.first_name }}</td>
+                <td>{{ i.last_name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}

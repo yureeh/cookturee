@@ -1,0 +1,22 @@
+{% extends "index_home/base.html" %}
+{% block content %}
+<p>.</p>
+<p>.</p>
+{{ recipes }}
+<p>.</p>
+    <form method = "POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        Title: <input type="text" name="title"/><br/>
+        Content: <br/>
+        <textarea cols="35" rows="8" name="content">
+        </textarea><br/>
+        {{ form.as_p }}
+        <br>
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+<p>.</p>
+<p>.</p>
+<p>.</p>
+
+{% endblock content%}

@@ -1,0 +1,76 @@
+{% extends "index_home/base.html" %}
+{% block content %}
+<div class="card bg-gradient-Gray 200 shadow p-3">
+    <h3>Volume</h3>
+    From: <input id="first" onchange="teaspoonTO();" type="number" name="fromVal" onKeyUp="teaspoonTO();" class="ucinput"autofocus>
+    <select  name="calFrom" id="calFrom" onChange="teaspoonTO();" class="form-control">
+        {% for unit in units %}
+            {% if unit.type.type == "Volume" %}
+                <option id="{{ unit }}1" value="{{ unit }}">{{ unit }} ({{ unit.abb }})</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    To: <input id="second" type="number" name="toVal" class="ucinput" readonly>
+    <select name="calTo" id="calTo" onChange="teaspoonTO();" class="form-control">
+        {% for unit in units %}
+            {% if unit.type.type == "Volume" %}
+                <option id="{{ unit }}2" value="{{ unit }}">{{ unit }} ({{ unit.abb }})</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <br><br>
+    <h3>Mass</h3>
+    From: <input id="first2" onchange="mass();" type="number" name="fromVal" onKeyUp="mass();" class="ucinput"autofocus>
+    <select  name="calFrom" id="calFrom2" onChange="mass();" class="form-control">
+        {% for unit in units %}
+            {% if unit.type.type == "Mass" %}
+                <option id="{{ unit }}11" value="{{ unit }}">{{ unit }} ({{ unit.abb }})</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    To: <input id="second2" type="number" name="toVal" class="ucinput" readonly>
+    <select name="calTo" id="calTo2" onChange="mass();" class="form-control">
+        {% for unit in units %}
+            {% if unit.type.type == "Mass" %}
+                <option id="{{ unit }}22" value="{{ unit }}">{{ unit }} ({{ unit.abb }})</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <br><br>
+    <h3>Time</h3>
+    From: <input id="first3" onchange="time();" type="number" name="fromVal" onKeyUp="time();" class="ucinput"autofocus>
+    <select  name="calFrom" id="calFrom3" onChange="time();" class="form-control">
+        {% for unit in units %}
+            {% if unit.type.type == "Time" %}
+                <option id="{{ unit }}111" value="{{ unit }}">{{ unit }} ({{ unit.abb }})</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    To: <input id="second3" type="number" name="toVal" class="ucinput" readonly>
+    <select name="calTo" id="calTo3" onChange="time();" class="form-control">
+        {% for unit in units %}
+            {% if unit.type.type == "Time" %}
+                <option id="{{ unit }}222" value="{{ unit }}">{{ unit }} ({{ unit.abb }})</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <br><br>
+    <h3>Temperature</h3>
+    From: <input id="first4" onchange="temperature();" type="number" name="fromVal" onKeyUp="temperature();" class="ucinput"autofocus>
+    <select  name="calFrom" id="calFrom4" onChange="temperature();" class="form-control">
+        {% for unit in units %}
+            {% if unit.type.type == "Temperature" %}
+                <option id="{{ unit }}1111" value="{{ unit }}">{{ unit }} ({{ unit.abb }})</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    To: <input id="second4" type="number" name="toVal" class="ucinput" readonly>
+    <select name="calTo" id="calTo4" onChange="temperature();" class="form-control">
+        {% for unit in units %}
+            {% if unit.type.type == "Temperature" %}
+                <option id="{{ unit }}2222" value="{{ unit }}">{{ unit }} ({{ unit.abb }})</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+</div>
+{% endblock content%}

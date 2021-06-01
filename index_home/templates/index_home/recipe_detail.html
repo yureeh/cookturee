@@ -1,0 +1,180 @@
+{% extends "index_home/base.html" %}
+{% block content %}
+<div class="card bg-gradient-Gray 200 shadow">
+    <div class="card">
+      <img class="card-img-top" src="{{ object.photo.url }}">
+      <div class="card-body">
+        <h5>
+            {{ object.name }}
+            {% if object.author == user and user.is_superuser != 1 %}
+            | <a href="{% url 'recipe-update' object.id %}" class="fas fa-pencil-alt text-pink"></a>
+            {% elif user.is_superuser == 1 %}
+            | <a href="{% url 'update-recipes' object.id %}" class="fas fa-pencil-alt text-pink"></a>
+            {% endif %}
+        </h5>
+        <small class="card-text">
+            {{ object.description|truncatechars:65  }}
+            {% if object.author == user and user.is_superuser != 1 %}
+            | <a href="{% url 'recipe-update' object.id %}" class="fas fa-pencil-alt text-pink"></a>
+            {% elif user.is_superuser == 1 %}
+            | <a href="{% url 'update-recipes' object.id %}" class="fas fa-pencil-alt text-pink"></a>
+            {% endif %}
+        </small>
+        <small>
+            <a href="{% url 'user-recipe' object.author.username %}">by {{ object.author }}</a><br>
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'like-recipe' recipe.pk %}">
+                  {% csrf_token %}
+                  {% if like %}
+                    <button type="submit" class=" btn btn-outline-secondary p-0 ni ni-favourite-28 text-red" name="post_id" value="{{ recipe.id }}"></button> {{ total_hearts }}
+                  {% else %}
+                    <button type="submit" class="btn btn-outline-secondary p-0 ni ni-favourite-28 text-gray" name="post_id" value="{{ recipe.id }}"></button> {{ total_hearts }}
+                  {% endif %}
+              </form>
+            <form action="{% url 'add-scheduling' user.username %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-outline-secondary p-0 far fa-calendar-plus" name="recipe_id" value="{{ recipe.pk }}" type="submit"></button>
+            </form>
+            {% endif %}
+
+        </small>
+        <hr class="my-4" />
+        <small>Chef's Tips: {{ object.chef_tips }}
+            {% if object.author == user and user.is_superuser != 1 %}
+            | <a href="{% url 'recipe-update' object.id %}" class="fas fa-pencil-alt text-pink"></a>
+            {% elif user.is_superuser == 1 %}
+            | <a href="{% url 'update-recipes' object.id %}" class="fas fa-pencil-alt text-pink"></a>
+            {% endif %}
+        </small>
+        <hr class="my-4" />
+        <small>Privacy: {{ object.privacy }}
+            {% if object.author == user and user.is_superuser != 1 %}
+            | <a href="{% url 'recipe-update' object.id %}" class="fas fa-pencil-alt text-pink"></a>
+            {% elif user.is_superuser == 1 %}
+            | <a href="{% url 'update-recipes' object.id %}" class="fas fa-pencil-alt text-pink"></a>
+            {% endif %}
+        </small>
+        <hr class="my-4" />
+        <small>Preparation Time: {{ object.preparation_time|time:"H" }} hr/s {{ object.preparation_time|time:"i" }} minute/s
+            {% if object.author == user and user.is_superuser != 1 %}
+            | <a href="{% url 'recipe-update' object.id %}" class="fas fa-pencil-alt text-pink"></a>
+            {% elif user.is_superuser == 1 %}
+            | <a href="{% url 'update-recipes' object.id %}" class="fas fa-pencil-alt text-pink"></a>
+            {% endif %}
+        </small>
+        <hr class="my-4" />
+        <small>Cooking Time: {{ object.cooking_time|time:"H" }} hr/s {{ object.cooking_time|time:"i" }} minute/s
+            {% if object.author == user and user.is_superuser != 1 %}
+            | <a href="{% url 'recipe-update' object.id %}" class="fas fa-pencil-alt text-pink"></a>
+            {% elif user.is_superuser == 1 %}
+            | <a href="{% url 'update-recipes' object.id %}" class="fas fa-pencil-alt text-pink"></a>
+            {% endif %}
+        </small>
+        <hr class="my-4" />
+        <small>Original Service Size: {{ object.service_size }}
+            {% if object.author == user and user.is_superuser != 1 %}
+            | <a href="{% url 'recipe-update' object.id %}" class="fas fa-pencil-alt text-pink"></a>
+            {% elif user.is_superuser == 1 %}
+            | <a href="{% url 'update-recipes' object.id %}" class="fas fa-pencil-alt text-pink"></a>
+            {% endif %}
+        </small>
+        <hr class="my-4" />
+        <div class="form-group">
+            <label for="example-number-input" class="form-control-label">Service Size:</label>
+            <input class="form-control-sm" value="{{ object.service_size }}" type="number" value="23" id="example-number-input" onchange="size_scaling()">
+        </div>
+        <hr class="my-4" />
+        <p>Ingredients:
+            {% if object.author == user %}
+                <a href="{% url 'add-ingredient' object.pk %}" class="ni ni-fat-add text-green"></a>
+            {% endif %}
+        </p>
+        <ul>
+          {% for ingre in Ingredients %}
+            {% if ingre.recipe.id == object.id %}
+            <li>
+                <small>
+                    {% if object.author == user %}
+                    <a href="{% url 'delete-ingre' ingre.id %}" class="far fa-trash-alt text-red"></a> |
+                    <a href="{% url 'update-ingre' ingre.id %}" class="fas fa-pencil-alt text-pink"></a> |
+                    {% endif %}
+                    {{ ingre.quantity }} {{ ingre.unit }} {{ ingre.ingredient }}, {{ ingre.other }}
+                </small>
+            </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+        <hr class="my-4" />
+        <p>Preparation:
+            {% if object.author == user %}
+            <a href="{% url 'add-preparation' object.pk %}" class="ni ni-fat-add text-green"></a>
+            {% endif %}
+        </p>
+        <ul>
+            {% for step in Steps %}
+                {% if step.recipe.id == object.id %}
+                <li>
+                    {% if object.author == user %}
+                        <small>
+                            <a href="{% url 'delete-preparation' step.id %}" class="far fa-trash-alt text-red"></a> |
+                            <a href="{% url 'update-preparation' step.id %}" class="fas fa-pencil-alt text-pink"></a> |
+                        </small>
+                    {% endif %}
+                    {{ step.order }}. <small>{{ step.step }}</small>
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <hr class="my-4" />
+        <p>Cooking Skills Needed:
+            {% if object.author == user %}
+                <a href="{% url 'add-recipe-skill' object.pk %}" class="ni ni-fat-add text-green"></a>
+            {% endif %}
+        </p>
+        <ol>
+            {% for skill in Skills %}
+                {% if skill.recipe.id == object.id %}
+                <li>
+                    <small>
+                        {% if object.author == user %}
+                            <a href="{% url 'delete-skill' skill.id %}" class="far fa-trash-alt text-red"></a> |
+                            <a href="{% url 'update-skill' skill.id %}" class="fas fa-pencil-alt text-pink"></a> |
+                        {% endif %}
+                        {{ skill }}
+                    </small>
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ol>
+        <hr class="my-4" />
+        <p>Cooking Tools Needed:
+            {% if object.author == user %}
+                <a href="{% url 'add-recipe-tool' %}" class="ni ni-fat-add text-green"></a>
+            {% endif %}
+        </p>
+        <ol>
+            {% for tool in Tools %}
+                {% if tool.recipe.id == object.id %}
+                <li>
+                    <small>
+                        {% if object.author == user %}
+                            <a href="{% url 'delete-tool' tool.id %}" class="far fa-trash-alt text-red"></a> |
+                            <a href="{% url 'update-tool' tool.id %}" class="fas fa-pencil-alt text-pink"></a> |
+                        {% endif %}
+                        {{ tool }}
+                    </small>
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ol>
+          {% if object.author == user %}
+              <hr class="my-4" />
+              <a href="{% url 'recipe-delete' object.id %}" class="btn btn-icon btn-warning btn-block" type="submit">
+                  <span class="btn-inner--icon"><i class="fas fa-save"></i></span>
+                  <span class="btn-inner--text">Delete</span>
+              </a>
+          {% endif %}
+      </div>
+    </div>
+</div>
+{% endblock content %}

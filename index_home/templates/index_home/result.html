@@ -1,0 +1,90 @@
+{% extends "index_home/base.html" %}
+{% block content %}
+<div class="col text-right mb-3">
+  <a href="{% url 'recipe-create' %}" class="btn btn-sm btn-primary">Create Recipe</a>
+</div>
+<div class="container-fluid">
+    <form class="" method="get" action="{% url 'add' %}">
+      <div class="input-group mb-3">
+        <input type="text" name='key' class="form-control form-control-rounded form-control-prepended" placeholder="Search.."
+               aria-label="Search..." aria-describedby="button-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-outline-primary" type="submit" id="button-addon2"><span class="fa fa-search"></span></button>
+        </div>
+      </div>
+    </form>
+</div>
+<div class="card bg-gradient-Gray 200 shadow">
+    <small><i style="color: gray">
+        [{{ remark }}]
+        <br>
+    </i></small>
+</div>
+<div class="card bg-gradient-Gray 200 shadow">
+    {% for i in ids %}
+        {% for recipe in recipes %}
+            {% if recipe.username == user.username or recipe.privacy == 'PUBLIC' %}
+            {% if recipe.id == i%}
+            {% if recipe.id == 659 %}
+                <div class="card">
+<!--                  <img class="card-img-top" src="{{ recipe.photo.url }}">-->
+                  <div class="card-body">
+                    <h2>{{ recipe.name }}</h2>
+                  </div>
+                </div>
+            {% elif recipe.id == 660 %}
+                <div class="card">
+<!--                  <img class="card-img-top" src="{{ recipe.photo.url }}">-->
+                  <div class="card-body">
+                    <h2>{{ recipe.name }}</h2>
+                  </div>
+                </div>
+            {% else %}
+                <div class="card">
+<!--                  <img class="card-img-top" src="{{ recipe.photo.url }}">-->
+                  <div class="card-body">
+                    <a href="{% url 'recipe-detail' recipe.id %}"><h5>{{ recipe.name }}</h5></a>
+                      <small class="card-text">{{ recipe.description|truncatechars:65  }}</small><br>
+                      <small class="card-text"> <b>Ingredients:</b><i>{{recipe.ingredients}}</i>
+                      </small>
+                    <h6>
+                        <a href="{% url 'user-recipe' recipe.username %}">by {{ recipe.username }}</a>
+                        | {{ recipe.date_added | date:"d M, Y" }}
+                        |
+                        <b style="color:red">
+                            <i class="ni ni-favourite-28"> {{ recipe.total_hearts }}</i>
+                        </b>
+                    </h6>
+                  </div>
+                </div>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</div>
+
+<div class="card bg-gradient-Gray 200 shadow">
+    {% for recipe in ree.itertuples %}
+        <div class="card">
+        <!--<img class="card-img-top" src="{{ recipe.photo.url }}">-->
+          <div class="card-body">
+            <a href="{% url 'recipe-detail' recipe.id %}"><h5>{{ recipe.name }}</h5></a>
+              <small class="card-text">{{ recipe.description|truncatechars:95  }}</small><br>
+              <small class="card-text"> <b>Ingredients:</b> {{recipe.ingredients}}
+              </small>
+            <h6>
+                <a href="">by {{ recipe.username }}</a>
+                | {{ recipe.date_added | date:"d M, Y" }}
+                |
+                <b style="color:red">
+                    <i class="ni ni-favourite-28"> {{ recipe.total_hearts }}</i>
+                </b>
+            </h6>
+          </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+{% endblock content %}

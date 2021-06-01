@@ -1,0 +1,68 @@
+{% extends "index_home/base.html" %}
+{% block content %}
+<div class="card bg-secondary shadow">
+    <div class="card-header bg-white border-0">
+      <div class="row align-items-center">
+        <div class="col-8">
+          <h3 class="mb-0">Logs</h3>
+        </div>
+        <div class="col-4 text-right">
+          <button onclick="PrintTable();" class="btn btn-sm btn-primary">Print</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h6 class="heading-small text-muted mb-4">User Logs information</h6>
+        <div class="pl-lg-4">
+          <div class="row">
+            <div class="col">
+              <div class="card shadow">
+                <div class="card-header border-0">
+                  <h3 class="mb-0">Logs table</h3>
+                </div>
+                <div class="table-responsive">
+                  <table id="myTable" class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr>
+                        <th scope="col">Logs</th>
+                      </tr>
+                      <tr>
+                        <th scope="col"><input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search Logs..."></th>
+<!--                        <th scope="col"></th>-->
+                      </tr>
+
+                    </thead>
+                    <tbody>
+                    {% for cat in Logs %}
+                      <tr>
+                        <td scope="row">
+                          {{ forloop.counter }}. <b>{{ cat.acts }}</b> :
+                          {% for user in Users %}
+                          {% if cat.username == user.id %}
+                          <a href="{% url 'user-recipe' user.username %}">{{ user.username }}</a>
+                          {% endif %}
+                          {% endfor %}
+                        </td>
+<!--                        <td class="text-right">-->
+<!--                          <div class="dropdown">-->
+<!--                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                              <i class="fas fa-ellipsis-v"></i>-->
+<!--                            </a>-->
+<!--&lt;!&ndash;                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">&ndash;&gt;-->
+<!--&lt;!&ndash;                              <a class="dropdown-item" href="{% url 'update-categories' cat.id %}">Update</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                              <a class="dropdown-item" href="{% url 'delete-categories' cat.id %}">Delete</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--                          </div>-->
+<!--                        </td>-->
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+{% endblock content%}

@@ -1,0 +1,34 @@
+{% extends "index_home/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="card bg-gradient-Gray 200 shadow">
+    <div class="card">
+      <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            {{ form | crispy }}
+<!--            <small class="card-text">Recipe Image: {{ form.photo }}</small>-->
+<!--            <hr class="my-4" />-->
+<!--            <small class="card-text">Recipe Name: {{ form.name }}</small>-->
+<!--            <hr class="my-4" />-->
+<!--            <small class="card-text">Author: {{ user.username }}</small>-->
+<!--            <hr class="my-4" />-->
+<!--            <small class="card-text">Description: {{ form.description }}</small>-->
+<!--            <hr class="my-4" />-->
+<!--            <small>Chef's Tips: {{ form.chef_tips }}</small>-->
+<!--            <hr class="my-4" />-->
+<!--            <div class="card-text"> Service Size: {{ form.service_size }}</div>-->
+<!--            <hr class="my-4" />-->
+<!--            <div class="card-text"> Preparation Time: {{ form.preparation_time }}</div>-->
+<!--            <hr class="my-4" />-->
+<!--            <div class="card-text"> Cooking Time: {{ form.cooking_time }}</div>-->
+            <hr class="my-4" />
+            <button class="btn btn-icon btn-primary btn-block" type="submit">
+              <span class="btn-inner--icon"><i class="fas fa-save"></i></span>
+              <span class="btn-inner--text">Submit</span>
+          </button>
+          </form>
+      </div>
+    </div>
+</div>
+{% endblock content %}

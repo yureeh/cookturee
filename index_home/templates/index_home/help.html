@@ -1,0 +1,14 @@
+{% extends "index_home/base.html" %}
+{% block content %}
+    def get_context_data(self, **kwargs):
+        context = super(RecipeListViewBase, self).get_context_data(**kwargs)
+        context['Total_Recipe'] = No_Recipe.objects.first()
+        context['Total_Users'] = No_Users.objects.first()
+        context['Total_Categories'] = No_Categories.objects.first()
+        context['Total_Ingres'] = No_Ingres.objects.first()
+        context['Total_Skills'] = No_Skills.objects.first()
+        context['Total_Tools'] = No_Tools.objects.first()
+        context['Total_Tags'] = No_Tags.objects.first()
+        context['Total_Units'] = No_Units.objects.first()
+        return context
+{% endblock content %}

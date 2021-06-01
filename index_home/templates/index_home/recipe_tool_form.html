@@ -1,0 +1,21 @@
+{% extends "index_home/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="card bg-gradient-Gray 200 shadow">
+    <div class="card">
+      <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            <p>Cooking Tools Needed:</p>
+            <div class="card-text"> Recipe: {{ form.recipe }}</div>
+            <div class="card-text"> Tool: {{ form.tool }}</div>
+            <br>
+            <button class="btn btn-icon btn-primary btn-block" type="submit">
+              <span class="btn-inner--icon"><i class="fas fa-save"></i></span>
+              <span class="btn-inner--text">Create recipe</span>
+          </button>
+          </form>
+      </div>
+    </div>
+</div>
+{% endblock content %}

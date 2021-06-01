@@ -1,0 +1,28 @@
+{% extends "index_home/base.html" %}
+{% block content %}
+<div class="htc__login__register bg__white ptb--130" style="background: rgba(0, 0, 0, 0) url({{ MEDIA_URL }}/static/index_home/images/bg/5.jpg) no-repeat scroll center center / cover ;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <ul class="login__register__menu" role="tablist">
+                    <li role="presentation" class="login active"><a href="#login" role="tab" data-toggle="tab">Add Recipes</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Start Login Register Content -->
+        <div class="row">
+            <div>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <li>{{ form.as_p }}</li>
+<!--                    <li><span>portfolio link:</span><a href="http://localhost:8000/user/{{ user.username }}">http://localhost:8000/user/{{ user.username }}</a></li>-->
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- End Login Register Content -->
+    </div>
+</div>
+{% endblock content %}
